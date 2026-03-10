@@ -25,6 +25,11 @@ const Header = () => {
 
   const NAV_MENUS = [
     {
+      name: "Home",
+      pathname: "/",
+      isDisabled: false,
+    },
+    {
       name: "Dashboard",
       pathname: "/dashboard",
       isDisabled: false,
@@ -41,8 +46,8 @@ const Header = () => {
     },
     {
       name: "Settings",
-      pathname: "#",
-      isDisabled: false,
+      pathname: `/dashboard/form/settings/${formId}`,
+      isDisabled: !formId,
     },
   ];
 
@@ -50,7 +55,7 @@ const Header = () => {
     <div className="shadow-sm w-full sticky top-0 bg-white/80 backdrop-blur-md dark:bg-gray-900/80 z-[9999] border-b border-gray-200 dark:border-gray-800">
       <div className="w-full mx-auto max-w-7xl p-3 px-5 flex items-center justify-between relative">
         <div className="flex items-center">
-          <Logo url="/dashboard" />
+          <Logo url="/" />
         </div>
 
         <div className="hidden lg:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">

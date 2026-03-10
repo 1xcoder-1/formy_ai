@@ -4,7 +4,9 @@ import HeroSection from "./_components/HeroSection";
 import TrustedBy from "./_components/TrustedBy";
 import FeaturesSection from "./_components/FeaturesSection";
 import HowItWorks from "./_components/HowItWorks";
+import StatsSection from "./_components/StatsSection";
 import ReviewsSection from "./_components/ReviewsSection";
+import FAQSection from "./_components/FAQSection";
 import CallToAction from "./_components/CallToAction";
 import Footer from "./_components/Footer";
 
@@ -20,9 +22,11 @@ export default function Home() {
 
       <HeroSection />
       <TrustedBy />
+      <StatsSection />
       <FeaturesSection />
       <HowItWorks />
       <ReviewsSection />
+      <FAQSection />
       <CallToAction />
       <Footer />
     </div>

@@ -12,6 +12,7 @@ import {
   BarChart2,
   ExternalLink,
   Loader2,
+  Settings2,
 } from "lucide-react";
 import { formatDistanceToNowStrict } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -93,9 +94,11 @@ const FormItem = (props: PropsType) => {
         className="w-full relative flex 
       items-center justify-center
       overflow-hidden h-[200px] rounded-t-2xl border border-gray-200
-      bg-gradient-to-br from-primary/20 via-primary/5 to-white
       shadow-sm group-hover:shadow-md transition-all
       "
+        style={{
+          background: props.backgroundColor ? `linear-gradient(135deg, ${props.backgroundColor}40 0%, ${props.backgroundColor}10 50%, white 100%)` : "linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-to))"
+        }}
       >
         <div
           className=" w-44 absolute bottom-0 
@@ -180,6 +183,16 @@ const FormItem = (props: PropsType) => {
               >
                 <BarChart2 className="w-4 h-4" />
                 View Responses
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  router.push(`/dashboard/form/settings/${formId}`);
+                }}
+                className="gap-2"
+              >
+                <Settings2 className="w-4 h-4" />
+                Settings
               </DropdownMenuItem>
               {published && (
                 <DropdownMenuItem

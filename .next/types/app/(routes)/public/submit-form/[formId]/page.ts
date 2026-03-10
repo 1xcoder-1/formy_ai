@@ -1,4 +1,4 @@
-// File: H:\Zip\Projects Zips\Advanced-AI-Formy-Builder-Drag-n-Drop-main\Advanced-AI-Formy-Builder-Drag-n-Drop-main\app\(routes)\public\submit-form\[formId]\page.tsx
+// File: H:\formy_ai\app\(routes)\public\submit-form\[formId]\page.tsx
 import * as entry from '../../../../../../../app/(routes)/public/submit-form/[formId]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
