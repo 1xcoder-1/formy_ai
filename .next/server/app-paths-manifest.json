@@ -1,9 +1,15 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/api/fetchFormById/route": "app/api/fetchFormById/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/api/upload/route": "app/api/upload/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
   "/api/auth/[kindeAuth]/route": "app/api/auth/[kindeAuth]/route.js",
   "/(routes)/(landingPage)/page": "app/(routes)/(landingPage)/page.js",
   "/(routes)/public/submit-form/[formId]/page": "app/(routes)/public/submit-form/[formId]/page.js",
   "/(routes)/dashboard/page": "app/(routes)/dashboard/page.js",
-  "/(routes)/dashboard/form/responds/[formId]/page": "app/(routes)/dashboard/form/responds/[formId]/page.js",
-  "/(routes)/dashboard/form/builder/[formId]/page": "app/(routes)/dashboard/form/builder/[formId]/page.js"
+  "/(routes)/dashboard/form/builder/[formId]/page": "app/(routes)/dashboard/form/builder/[formId]/page.js",
+  "/(routes)/dashboard/form/settings/[formId]/page": "app/(routes)/dashboard/form/settings/[formId]/page.js",
+  "/(routes)/dashboard/form/responds/[formId]/page": "app/(routes)/dashboard/form/responds/[formId]/page.js"
 }

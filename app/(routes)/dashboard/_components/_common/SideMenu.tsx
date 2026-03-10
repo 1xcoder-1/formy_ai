@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { Blocks, LucideIcon, MessageSquare } from "lucide-react";
+import { Blocks, LucideIcon, MessageSquare, Settings } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -9,6 +9,7 @@ type NavType = {
   url: string;
   icon: LucideIcon;
 };
+
 const SideMenu = () => {
   const { formId } = useParams();
   const router = useRouter();
@@ -25,7 +26,13 @@ const SideMenu = () => {
       url: `/dashboard/form/responds/${formId}`,
       icon: MessageSquare,
     },
+    {
+      title: "Settings",
+      url: `/dashboard/form/settings/${formId}`,
+      icon: Settings,
+    },
   ];
+
   return (
     <div
       className="fixed h-screen z-40 -ml-1

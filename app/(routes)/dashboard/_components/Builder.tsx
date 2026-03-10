@@ -5,8 +5,13 @@ import { defaultBackgroundColor } from "@/constant";
 import BuilderCanvas from "./BuilderCanvas";
 import BuilderBlockProperties from "./BuilderBlockProperties";
 import FloatingShareButton from "./_common/FloatingShareButton";
+import { useBuilder } from "@/context/builder-provider";
 
 const Builder = (props: { isSidebarOpen: boolean }) => {
+  const { formData } = useBuilder();
+  const backgroundColor =
+    formData?.settings?.backgroundColor || defaultBackgroundColor;
+
   return (
     <>
       <BuilderSidebar />
@@ -14,7 +19,7 @@ const Builder = (props: { isSidebarOpen: boolean }) => {
         <div
           className="w-full h-full"
           style={{
-            backgroundColor: defaultBackgroundColor,
+            backgroundColor: backgroundColor,
           }}
         >
           <SidebarTrigger className=" absolute top-0 z-50" />

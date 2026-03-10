@@ -19,6 +19,8 @@ const Page = async ({ params }: { params: { formId: string } }) => {
       formId={formId}
       blocks={blocks}
       bannerImage={(form.settings as any)?.bannerImage}
+      primaryColor={form.settings.primaryColor}
+      backgroundColor={form.settings.backgroundColor}
     />
   );
 };

@@ -1,4 +1,4 @@
-// File: H:\Zip\Projects Zips\Advanced-AI-Formy-Builder-Drag-n-Drop-main\Advanced-AI-Formy-Builder-Drag-n-Drop-main\app\api\auth\[kindeAuth]\route.ts
+// File: H:\formy_ai\app\api\auth\[kindeAuth]\route.ts
 import * as entry from '../../../../../../app/api/auth/[kindeAuth]/route.js'
 import type { NextRequest } from 'next/server.js'
 

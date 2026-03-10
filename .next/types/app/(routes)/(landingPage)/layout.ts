@@ -1,4 +1,4 @@
-// File: H:\Zip\Projects Zips\Advanced-AI-Formy-Builder-Drag-n-Drop-main\Advanced-AI-Formy-Builder-Drag-n-Drop-main\app\(routes)\(landingPage)\layout.tsx
+// File: H:\formy_ai\app\(routes)\(landingPage)\layout.tsx
 import * as entry from '../../../../../app/(routes)/(landingPage)/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

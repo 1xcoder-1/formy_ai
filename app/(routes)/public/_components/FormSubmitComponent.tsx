@@ -13,8 +13,10 @@ const FormSubmitComponent = (props: {
   formId: string;
   blocks: FormBlockInstance[];
   bannerImage?: string;
+  primaryColor?: string;
+  backgroundColor?: string;
 }) => {
-  const { formId, blocks, bannerImage } = props;
+  const { formId, blocks, bannerImage, primaryColor, backgroundColor } = props;
 
   const formVals = useRef<{ [key: string]: string }>({});
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
@@ -89,9 +91,12 @@ const FormSubmitComponent = (props: {
 
   return (
     <div
-      className="scrollbar w-full h-full
+      className="scrollbar w-full min-h-screen
   overflow-y-auto pt-3 transition-all duration-300
   "
+      style={{
+        backgroundColor: backgroundColor || "inherit",
+      }}
     >
       <div
         className="w-full h-full 
@@ -158,7 +163,11 @@ const FormSubmitComponent = (props: {
                   })}
                   <div className="w-ful">
                     <Button
-                      className="!bg-primary"
+                      style={{
+                        backgroundColor: primaryColor,
+                        color: "white", // Ensure text is visible
+                      }}
+                      className={!primaryColor ? "bg-primary" : ""}
                       disabled={isLoading}
                       onClick={handleSubmit}
                     >
