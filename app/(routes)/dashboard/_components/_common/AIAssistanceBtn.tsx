@@ -6,23 +6,40 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useBuilder } from "@/context/builder-provider";
 import { toast } from "@/hooks/use-toast";
 import { AIChatSession } from "@/lib/google-ai";
 import { generateUniqueId } from "@/lib/helper";
 import { generateFormQuestionPrompt } from "@/lib/prompts";
-import { Loader, Sparkles } from "lucide-react";
+import { Loader, Sparkles, X } from "lucide-react";
 import React, { useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const AIAssistanceBtn = () => {
-  const { formData, blockLayouts, setBlockLayouts } = useBuilder();
+  const { formData, blockLayouts, setBlockLayouts, handleSeletedLayout } =
+    useBuilder();
+  const isMobile = useIsMobile();
   const [userRequest, setUserRequest] = useState("");
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [show, setShow] = useState(false);
 
   const isPublished = formData?.published;
+
+  const onOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (open && isMobile) {
+      handleSeletedLayout(null); // Close right sidebar on mobile
+    }
+  };
 
   const GenerateFormQuestionsWithAI = async () => {
     if (!userRequest) {
@@ -52,10 +69,8 @@ const AIAssistanceBtn = () => {
 
       setBlockLayouts((prevBlocks) => {
         if (actionType === "addQuestions") {
-          // Append the new blocks to the existing ones
           return [...prevBlocks, ...addUniqueIdToGeneratedBlocks];
         } else if (actionType === "createForm") {
-          // Remove all existing blocks
           return [...addUniqueIdToGeneratedBlocks];
         } else {
           console.warn(`Unhandled actionType: ${actionType}`);
@@ -85,149 +100,120 @@ const AIAssistanceBtn = () => {
     return blocks;
   }
 
-  return (
-    <>
-      <Popover open={isOpen} onOpenChange={setIsOpen}>
-        <PopoverTrigger asChild>
+  const content = (
+    <div
+      className="
+    flex flex-col  
+    w-full max-w-[390px] bg-white 
+    rounded-lg px-2 sm:px-5 pb-[14px] pt-[18px]
+    "
+    >
+      <div className="flex relative items-center justify-between border-b border-gray-200 pb-2">
+        <div className="flex space-x-6 -mb-px">
+          <span className="inline-flex items-center px-1 pb-2 text-xs font-semibold text-primary border-b-2 border-primary">
+            Ask to generate form or questions
+          </span>
+        </div>
+        <div className="text-xs py-1 px-[6px] bg-gray-100 rounded-md text-gray-600 font-medium">
+          Beta
+        </div>
+      </div>
+
+      <div className="mt-[22px]">
+        <Textarea
+          value={userRequest}
+          rows={4}
+          readOnly={isPublished}
+          className="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md focus:ring-primary h-32"
+          placeholder="Describe the form or questions you want to generate with AI..."
+          spellCheck="false"
+          onChange={(e) => setUserRequest(e.target.value)}
+        />
+      </div>
+
+      <div className="flex justify-between items-center mt-4">
+        <div
+          role="button"
+          className="text-primary font-medium underline text-sm ml-1 hover:text-primary/80 transition-colors"
+          onClick={() => setShow(!show)}
+        >
+          {show ? "Hide tips" : "Tips"}
+        </div>
+
+        <Button
+          type="button"
+          size="sm"
+          className="px-4 py-2 font-semibold shadow-md active:scale-95 transition-all"
+          disabled={loading || isPublished}
+          onClick={GenerateFormQuestionsWithAI}
+        >
+          {loading ? (
+            <Loader size={18} className="animate-spin mr-2" />
+          ) : (
+            <Sparkles className="w-4 h-4 mr-2" />
+          )}
+          Generate
+        </Button>
+      </div>
+
+      {show && (
+        <div className="flex flex-col rounded-lg border border-primary/20 bg-primary/5 text-primary/80 px-3 py-3 mt-4 animate-in fade-in slide-in-from-top-2 duration-300">
+          <div className="font-bold text-sm mb-2">Let the AI know:</div>
+          <ul className="list-disc ml-5 text-sm space-y-1">
+            <li>Type of form (e.g., Hotel Booking)</li>
+            <li>Information to collect (e.g., name, date)</li>
+            <li>Desired tone (e.g., formal)</li>
+            <li>Number of questions</li>
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <Dialog open={isOpen} onOpenChange={onOpenChange}>
+        <DialogTrigger asChild>
           <Button
             size="icon"
-            className="rounded-lg !bg-primary/20 
-            border-none p-4 shadow-sm"
+            className="rounded-lg !bg-primary/20 border-none p-4 shadow-sm active:scale-90 transition-all"
             aria-label="AI assistance"
           >
             <Sparkles className="w-8 h-8 text-primary" />
           </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          className="w-auto p-0"
-          forceMount
-          align="start"
-          side="right"
+        </DialogTrigger>
+        <DialogContent className="w-[95%] max-w-[400px] p-2 rounded-xl">
+          <DialogHeader className="hidden">
+            <DialogTitle>AI Assistance</DialogTitle>
+          </DialogHeader>
+          {content}
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Popover open={isOpen} onOpenChange={onOpenChange}>
+      <PopoverTrigger asChild>
+        <Button
+          size="icon"
+          className="rounded-lg !bg-primary/20 border-none p-4 shadow-sm hover:scale-105 transition-all"
+          aria-label="AI assistance"
         >
-          <div
-            className="
-          flex flex-col  
-          w-[390px] bg-white border-2 border-purple-200 
-          rounded-lg px-5  pb-[14px] pt-[18px] shadow-xl
-          "
-          >
-            <div className="flex relative">
-              <div
-                className="pb-5 sm:pb-0 
-                flex w-full overflow-x-auto 
-                overflow-y-hidden scrollbar-hide 
-              border-b border-gray-200"
-              >
-                <div className="block mx-4 !ml-0">
-                  <nav className="flex space-x-6 -mb-px">
-                    <a
-                      className="inline-flex items-center
-                     px-1 pb-2 text-xs font-medium
-                      text-primary border-b-2"
-                    >
-                      Ask to generate form or questions
-                    </a>
-                  </nav>
-                </div>
-              </div>
-              <div
-                className="flex absolute top-0 
-              right-0  -mt-[6px] whitespace-nowrap
-              text-xs py-1 px-[6px] bg-gray-100
-              rounded-md text-gray-600"
-              >
-                Beta
-              </div>
-            </div>
-
-            <div className="mt-[22px]">
-              <Textarea
-                value={userRequest}
-                rows={4}
-                readOnly={isPublished}
-                className="shadow-sm block w-full 
-                sm:text-sm border-gray-300 rounded-md 
-                focus:ring-primary"
-                placeholder="Describe the form or questions 
-                you want to generate with AI..."
-                spellCheck="false"
-                onChange={(e) => {
-                  setUserRequest(e.target.value);
-                }}
-              />
-            </div>
-
-            <div
-              className="flex 
-            justify-between
-            items-center mt-4"
-            >
-              <div
-                role="button"
-                className=" text-purple-400 
-                font-medium underline text-sm ml-1"
-                onClick={() => setShow(!show)}
-              >
-                {show ? "Hide tips" : "Tips"}
-              </div>
-
-              <Button
-                type="button"
-                size="sm"
-                className="!px-3 !font-medium 
-                !py-2"
-                disabled={loading || isPublished}
-                onClick={GenerateFormQuestionsWithAI}
-              >
-                <Sparkles />
-                Generate
-                {loading && <Loader size="15px" className="animate-spin" />}
-              </Button>
-            </div>
-
-            {show && (
-              <div
-                className="flex 
-              flex-col
-              rounded border
-               border-purple-300
-                bg-purple-100
-                 text-purple-500
-                 px-3 pt-3
-                 mt-2
-                 mb-1"
-              >
-                <div
-                  className="flex 
-                font-semibold text-sm mb-1"
-                >
-                  Let the AI know:
-                </div>
-                <ul
-                  className="tips-options 
-                text-sm mx-4 space-y-2 pb-2"
-                >
-                  <li>
-                    What Form you want it create (e.g Create a booking form for
-                    our hotel)?
-                  </li>
-                  <li>
-                    What information you'd like to collect (e.g. email, name,
-                    description)
-                  </li>
-
-                  <li>
-                    What tone would you like the questions in (e.g. formal,
-                    informal)?
-                  </li>
-                  <li>How many questions do you want to ask?</li>
-                </ul>
-              </div>
-            )}
-          </div>
-        </PopoverContent>
-      </Popover>
-    </>
+          <Sparkles className="w-8 h-8 text-primary" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        className="w-auto p-0 border-none shadow-2xl rounded-xl overflow-hidden"
+        forceMount
+        align="start"
+        side="right"
+      >
+        <div className="border-2 border-primary/10 rounded-xl bg-white">
+          {content}
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 };
 

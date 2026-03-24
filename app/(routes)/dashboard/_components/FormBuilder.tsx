@@ -1,7 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { Loader } from "lucide-react";
-import { DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import {
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { useBuilder } from "@/context/builder-provider";
 import Builder from "./Builder";
@@ -30,12 +36,21 @@ const FormBuilder = () => {
     },
   });
 
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 250,
+      tolerance: 5,
+    },
+  });
+
+  const sensors = useSensors(mouseSensor, touchSensor);
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(
     isPublished ? false : true
   );
   return (
     <div>
-      <DndContext sensors={useSensors(mouseSensor)}>
+      <DndContext sensors={sensors}>
         <BuilderDragOverlay />
 
         <SidebarProvider

@@ -12,6 +12,11 @@ import { FormBlocks } from "@/lib/form-blocks";
 import { allBlockLayouts } from "@/constant";
 import { generateUniqueId } from "@/lib/helper";
 
+import { ArrowDown, ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useSidebar } from "@/components/ui/sidebar";
+
 const BuilderCanvas = () => {
   const {
     blockLayouts,
@@ -112,8 +117,7 @@ const BuilderCanvas = () => {
   });
   return (
     <div
-      className="relative w-full
-  h-[calc(100vh_-_65px)] px-5 md:px-0 pt-4 pb-[120px] overflow-auto
+      className="relative w-full px-5 md:px-0 pt-4 pb-[120px] 
   transition-all duration-300 scrollbar
   "
     >
@@ -154,7 +158,7 @@ const BuilderCanvas = () => {
 
           {blockLayouts.length > 0 && (
             <div className="flex flex-col w-full gap-4">
-              {blockLayouts.map((blockLayout) => (
+              {blockLayouts.map((blockLayout, index) => (
                 <CanvasBlockLayoutWrapper
                   key={blockLayout.id}
                   activeBlock={activeBlock}
@@ -176,6 +180,9 @@ function CanvasBlockLayoutWrapper({
   blockLayout: FormBlockInstance;
   activeBlock: Active | null;
 }) {
+  const { handleSeletedLayout } = useBuilder();
+  const { setOpenMobile } = useSidebar();
+  const isMobile = useIsMobile();
   const CanvasBlockLayout = FormBlocks[blockLayout.blockType].canvasComponent;
 
   const topCorner = useDroppable({
@@ -239,7 +246,17 @@ function CanvasBlockLayoutWrapper({
           </div>
         )}
 
-      <div className="relative">
+      <div
+        className="relative cursor-pointer group"
+        onClick={(e) => {
+          // No stopPropagation here so we don't block anything else 
+          // but we select the top-level layout block
+          handleSeletedLayout(blockLayout);
+          if (isMobile) {
+            setOpenMobile(false);
+          }
+        }}
+      >
         <CanvasBlockLayout blockInstance={blockLayout} />
       </div>
     </div>

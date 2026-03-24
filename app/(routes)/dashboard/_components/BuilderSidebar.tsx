@@ -19,6 +19,7 @@ import { FileTextIcon, Home } from "lucide-react";
 import FormBlockBox from "./_common/FormBlockBox";
 import FormSettings from "./_common/FormSettings";
 import { useBuilder } from "@/context/builder-provider";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const BuilderSidebar = ({
   rest,
@@ -30,7 +31,12 @@ const BuilderSidebar = ({
   const [tab, setTab] = useState<"blocks" | "settings">("blocks");
 
   return (
-    <Sidebar className="border-r left-12 pt-16" {...rest}>
+    <Sidebar
+      className={cn("border-r pt-16", {
+        "left-12": !useIsMobile(),
+      })}
+      {...rest}
+    >
       <SidebarHeader className="bg-white px-0">
         <header
           className="border-b border-gray-200

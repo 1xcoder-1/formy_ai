@@ -15,9 +15,15 @@ const HeroSection = () => {
                     {/* New Feature Pill */}
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 dark:bg-black/30 backdrop-blur-sm border border-black/10 dark:border-white/10 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer mb-8"
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ 
+                            type: "spring",
+                            stiffness: 100,
+                            damping: 20,
+                            duration: 0.5 
+                        }}
+                        className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 dark:bg-black/30 backdrop-blur-sm border border-black/10 dark:border-white/10 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer mb-8 will-change-transform"
                     >
                         <span className="flex h-5 w-auto items-center justify-center rounded-full bg-primary px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
                             New
@@ -34,9 +40,10 @@ const HeroSection = () => {
 
                     <motion.h1 
                         initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.2 }}
-                        className="text-6xl md:text-8xl font-black tracking-tight text-gray-900 dark:text-white leading-[1] mb-8"
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                        className="text-6xl md:text-8xl font-black tracking-tight text-gray-900 dark:text-white leading-[1] mb-8 will-change-transform"
                     >
                         Build Beautiful Forms <br />
                         <span className="relative inline-block mt-2">
@@ -50,9 +57,10 @@ const HeroSection = () => {
 
                     <motion.p 
                         initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.4 }}
-                        className="max-w-2xl text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed font-medium"
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+                        className="max-w-2xl text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed font-medium will-change-transform"
                     >
                         The intelligent form builder that understands your needs. 
                         No coding, no friction, just results.

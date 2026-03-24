@@ -1,0 +1,14 @@
+Fixed React Grab build and styling errors.
+Enabled one-tap block adding for mobile and tablet devices.
+Auto-closes the left blocks drawer when a field is added on mobile.
+Auto-closes the blocks drawer when selecting any field for editing on mobile.
+Ensures all mobile fields are added into a layout, creating one automatically if needed.
+Centered the navigation links in the dashboard header.
+Centered the navigation links in the home page navbar.
+Cleaned up the builder workspace by removing the double scrollbar.
+Disabled the React Grab developer tool as requested.
+Added a delete button to every field's property panel for easier management.
+Centered the AI assistant dialog for better mobile experience.
+Boosted home page animation reliability and fixed flickering issues.
+Set all notifications to hide automatically after 2 seconds.
+Offset notifications slightly from the top on mobile so they don't cover the header.

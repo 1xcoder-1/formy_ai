@@ -28,11 +28,17 @@ const FeaturesSection = () => {
                 ].map((feature, i) => (
                     <motion.div 
                         key={i}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.1 }}
-                        className="p-8 rounded-3xl bg-white/50 dark:bg-gray-900/50 backdrop-blur-xl border border-gray-100 dark:border-gray-800 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 group"
+                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ 
+                            type: "spring",
+                            stiffness: 80,
+                            damping: 15,
+                            delay: i * 0.1,
+                            duration: 0.6
+                        }}
+                        className="p-8 rounded-3xl bg-white/50 dark:bg-gray-900/50 backdrop-blur-xl border border-gray-100 dark:border-gray-800 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 group will-change-transform"
                     >
                         <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
                             <feature.icon className="w-7 h-7" />
