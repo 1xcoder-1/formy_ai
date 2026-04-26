@@ -235,10 +235,8 @@ function RadioSelectPropertiesComponent({
   }, [block.attributes, form]);
 
   function setChanges(values: propertiesValidateSchemaType) {
-    if (!parentId) return null;
-
-    //Update ChildBlock
-    updateChildBlock(parentId, block.id, {
+    //Update Block
+    updateChildBlock(parentId || "", block.id, {
       ...block,
       attributes: {
         ...block.attributes,

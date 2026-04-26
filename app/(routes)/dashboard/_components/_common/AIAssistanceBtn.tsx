@@ -16,7 +16,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useBuilder } from "@/context/builder-provider";
 import { toast } from "@/hooks/use-toast";
-import { AIChatSession } from "@/lib/google-ai";
+import { generateAIPrompt } from "@/actions/ai.action";
 import { generateUniqueId } from "@/lib/helper";
 import { generateFormQuestionPrompt } from "@/lib/prompts";
 import { Loader, Sparkles, X } from "lucide-react";
@@ -60,9 +60,13 @@ const AIAssistanceBtn = () => {
         blockLayouts
       );
 
-      const result = await AIChatSession.sendMessage(PROMPT);
-      const responseText = await result.response.text();
-      const parsedResponse = JSON?.parse(responseText);
+      const result = await generateAIPrompt(PROMPT);
+
+      if (!result.success || !result.data) {
+        throw new Error(result.message || "Failed to generate AI response");
+      }
+
+      const parsedResponse = JSON?.parse(result.data);
       const actionType = parsedResponse.actionType;
       const generatedBlocks = parsedResponse.blocks;
       const addUniqueIdToGeneratedBlocks = addUniqueIds(generatedBlocks);
@@ -104,7 +108,7 @@ const AIAssistanceBtn = () => {
     <div
       className="
     flex flex-col  
-    w-full max-w-[390px] bg-white 
+    w-full max-w-[650px] bg-white 
     rounded-lg px-2 sm:px-5 pb-[14px] pt-[18px]
     "
     >
@@ -113,9 +117,6 @@ const AIAssistanceBtn = () => {
           <span className="inline-flex items-center px-1 pb-2 text-xs font-semibold text-primary border-b-2 border-primary">
             Ask to generate form or questions
           </span>
-        </div>
-        <div className="text-xs py-1 px-[6px] bg-gray-100 rounded-md text-gray-600 font-medium">
-          Beta
         </div>
       </div>
 
@@ -182,7 +183,7 @@ const AIAssistanceBtn = () => {
             <Sparkles className="w-8 h-8 text-primary" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-[95%] max-w-[400px] p-2 rounded-xl">
+        <DialogContent className="w-[95%] max-w-[650px] p-2 rounded-xl">
           <DialogHeader className="hidden">
             <DialogTitle>AI Assistance</DialogTitle>
           </DialogHeader>

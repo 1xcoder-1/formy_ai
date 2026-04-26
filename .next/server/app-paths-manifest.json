@@ -1,0 +1,8 @@
+{
+  "/api/auth/[kindeAuth]/route": "app/api/auth/[kindeAuth]/route.js",
+  "/(routes)/(landingPage)/page": "app/(routes)/(landingPage)/page.js",
+  "/(routes)/dashboard/page": "app/(routes)/dashboard/page.js",
+  "/(routes)/public/submit-form/[formId]/page": "app/(routes)/public/submit-form/[formId]/page.js",
+  "/(routes)/dashboard/form/builder/[formId]/page": "app/(routes)/dashboard/form/builder/[formId]/page.js",
+  "/(routes)/dashboard/form/responds/[formId]/page": "app/(routes)/dashboard/form/responds/[formId]/page.js"
+}

@@ -20,6 +20,8 @@
 - **📱 Responsive by Design**: Forms that look stunning on every device—from desktop to mobile.
 - **⚡ Built for Speed**: Powered by Next.js 14 and Neon DB for lightning-fast performance.
 - **🔍 Professional SEO**: Fully optimized with dynamic meta tags, sitemaps, robots.txt, and JSON-LD structured data.
+- **⏳ Expiry & Limit Rules**: Define response cut-offs seamlessly.
+- **📧 Email Notifications**: Automated creator summaries on submission loops.
 
 ---
 
@@ -107,3 +109,16 @@ Contributions are what make the open-source community such an amazing place to l
 Distributed under the MIT License. See `LICENSE` for more information (if applicable).
 
 Built with ❤️ by [1xcoder-1](https://github.com/1xcoder-1)
+
+
+
+
+
+
+
+
+
+Email Notifications: Integrate a service like Resend or SendGrid to automatically email the form creator whenever a new response is submitted.
+
+
+Form Expiry & Limits: Add settings for "Maximum Responses" or "Expiry Date" to the FormSettings model, automatically disabling the form when criteria are met.

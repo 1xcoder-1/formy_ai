@@ -1,0 +1,67 @@
+{
+  "pages": {
+    "/(routes)/(landingPage)/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/(landingPage)/page.js"
+    ],
+    "/(routes)/(landingPage)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/(landingPage)/layout.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
+    ],
+    "/(routes)/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/dashboard/page.js"
+    ],
+    "/(routes)/dashboard/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/dashboard/layout.js"
+    ],
+    "/(routes)/dashboard/form/builder/[formId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(routes)/dashboard/form/builder/[formId]/page.css",
+      "static/chunks/app/(routes)/dashboard/form/builder/[formId]/page.js"
+    ],
+    "/(routes)/dashboard/form/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/dashboard/form/layout.js"
+    ],
+    "/(routes)/public/submit-form/[formId]/loading": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/public/submit-form/[formId]/loading.js"
+    ],
+    "/(routes)/public/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/public/layout.js"
+    ],
+    "/(routes)/dashboard/form/responds/[formId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/dashboard/form/responds/[formId]/page.js"
+    ],
+    "/(routes)/dashboard/form/responds/[formId]/loading": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/dashboard/form/responds/[formId]/loading.js"
+    ],
+    "/(routes)/public/submit-form/[formId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(routes)/public/submit-form/[formId]/page.css",
+      "static/chunks/app/(routes)/public/submit-form/[formId]/page.js"
+    ]
+  }
+}

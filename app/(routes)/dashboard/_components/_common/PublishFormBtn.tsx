@@ -5,22 +5,51 @@ import { Loader, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useBuilder } from "@/context/builder-provider";
 import { cn } from "@/lib/utils";
-import { updatePublish } from "@/actions/form.action";
+import { updatePublish, updateFormSettings } from "@/actions/form.action";
 import { toast } from "@/hooks/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 const PublishFormBtn = () => {
   const { formData, setFormData, handleSeletedLayout } = useBuilder();
   const formId = formData?.formId;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const [maxResponses, setMaxResponses] = useState<string>("");
+  const [expiryDate, setExpiryDate] = useState<string>("");
+
+  const isPublished = formData?.published;
+
+  const handlePublishClick = () => {
+    if (isPublished) {
+      togglePublishState();
+    } else {
+      const settings = formData?.settings as any;
+      if (settings) {
+        setMaxResponses(settings.maxResponses ? String(settings.maxResponses) : "");
+        setExpiryDate(settings.expiryDate ? String(settings.expiryDate).split("T")[0] : "");
+      }
+      setIsOpen(true);
+    }
+  };
 
   const togglePublishState = async () => {
     try {
       if (!formId) return;
       setIsLoading(true);
 
-      // Toggle published state
-      const newPublishedState = !formData?.published;
+      const newPublishedState = !isPublished;
       const response = await updatePublish(formId, newPublishedState);
       if (response?.success) {
         toast({
@@ -33,6 +62,7 @@ const PublishFormBtn = () => {
           ...formData,
           published: response.published || false,
         });
+        setIsOpen(false);
       } else {
         toast({
           title: "Error",
@@ -51,30 +81,124 @@ const PublishFormBtn = () => {
     }
   };
 
-  const isPublished = formData?.published;
+  const saveAndPublish = async () => {
+    try {
+      if (!formId) return;
+      setIsLoading(true);
+
+      // Save Limits & Expiry
+      await updateFormSettings({
+        formId,
+        maxResponses: maxResponses ? parseInt(maxResponses) : null,
+        expiryDate: expiryDate || null,
+      });
+
+      // Fire Publish trigger
+      const response = await updatePublish(formId, true);
+      if (response?.success) {
+        toast({
+          title: "Success",
+          description: "Form limits configured and published successfully!",
+        });
+
+        handleSeletedLayout(null);
+        setFormData({
+          ...formData,
+          published: true,
+          settings: {
+            ...formData.settings,
+            maxResponses: maxResponses ? parseInt(maxResponses) : null,
+            expiryDate: expiryDate || null,
+          }
+        });
+        setIsOpen(false);
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: "Failed to configure parameters",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <Button
-      disabled={isLoading}
-      size="sm"
-      variant={isPublished ? "destructive" : "default"}
-      className={cn(
-        isPublished ? "bg-red-500 hover:bg-red-600" : "!bg-primary",
-        "text-white"
-      )}
-      onClick={togglePublishState}
-    >
-      {isLoading ? (
-        <Loader className="w-4 h-4 animate-spin" />
-      ) : isPublished ? (
-        "Unpublish"
-      ) : (
-        <>
-          <Send />
-          Publish
-        </>
-      )}
-    </Button>
+    <>
+      <Button
+        disabled={isLoading}
+        size="sm"
+        variant={isPublished ? "destructive" : "default"}
+        className={cn(
+          isPublished ? "bg-red-500 hover:bg-red-600" : "!bg-primary",
+          "text-white"
+        )}
+        onClick={handlePublishClick}
+      >
+        {isLoading ? (
+          <Loader className="w-4 h-4 animate-spin" />
+        ) : isPublished ? (
+          "Unpublish"
+        ) : (
+          <>
+            <Send className="w-4 h-4 mr-1" />
+            Publish
+          </>
+        )}
+      </Button>
+
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Publish & Configure Limits</DialogTitle>
+            <DialogDescription>
+              Set maximum responses or expiration timelines before turning this live.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="max-responses">Maximum Responses (Optional)</Label>
+              <Input
+                id="max-responses"
+                type="number"
+                placeholder="Leave blank for unlimited"
+                value={maxResponses}
+                onChange={(e) => setMaxResponses(e.target.value)}
+              />
+            </div>
+            
+            <div className="grid gap-2">
+              <Label htmlFor="expiry-date">Expiration Date (Optional)</Label>
+              <Input
+                id="expiry-date"
+                type="date"
+                value={expiryDate}
+                onChange={(e) => setExpiryDate(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsOpen(false)}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={saveAndPublish}
+              disabled={isLoading}
+              className="bg-primary text-white"
+            >
+              {isLoading ? <Loader className="w-4 h-4 animate-spin" /> : "Save & Publish"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

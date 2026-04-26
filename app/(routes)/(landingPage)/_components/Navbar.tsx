@@ -94,7 +94,7 @@ const NavBar = () => {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="text-rose-600 focus:text-rose-600 focus:bg-rose-50">
-                    <LogoutLink className="flex items-center gap-2 cursor-pointer w-full">
+                    <LogoutLink postLogoutRedirectURL="/" className="flex items-center gap-2 cursor-pointer w-full">
                       <LogOut className="w-4 h-4" />
                       Logout
                     </LogoutLink>

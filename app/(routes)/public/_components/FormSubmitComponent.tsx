@@ -18,7 +18,7 @@ const FormSubmitComponent = (props: {
 }) => {
   const { formId, blocks, bannerImage, primaryColor, backgroundColor } = props;
 
-  const formVals = useRef<{ [key: string]: string }>({});
+  const [formValues, setFormValues] = useState<{ [key: string]: string }>({});
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -27,24 +27,31 @@ const FormSubmitComponent = (props: {
   // Validate all fields
   const validateFields = () => {
     const errors: { [key: string]: string } = {};
-    blocks.forEach((block) => {
-      if (!block.childblocks) return;
-      block.childblocks?.forEach((childblock) => {
-        const required = childblock.attributes?.required;
-        const blockValue = formVals.current?.[childblock.id]?.trim();
 
-        // Check if field is required and empty
-        if (required && (!blockValue || blockValue.trim() === "")) {
-          errors[childblock.id] = "This Field is required";
+    const checkRequired = (blockList: FormBlockInstance[]) => {
+      blockList.forEach((block) => {
+        if (!block) return;
+        const required = block.attributes?.required;
+        const blockValue = formValues?.[block.id]?.trim();
+
+        const inputBlockTypes = ["TextField", "TextArea", "RadioSelect", "StarRating", "Checkbox", "Select", "DatePicker"];
+        if (inputBlockTypes.includes(block.blockType) && required && (!blockValue || blockValue.trim() === "")) {
+          errors[block.id] = "This Field is required";
+        }
+
+        if (block.childblocks && block.childblocks.length > 0) {
+          checkRequired(block.childblocks);
         }
       });
-    });
+    };
+
+    checkRequired(blocks);
     setFormErrors(errors); // Update state with errors
     return Object.keys(errors).length === 0; // Return true if no errors
   };
 
   const handleBlur = (key: string, value: string) => {
-    formVals.current[key] = value;
+    setFormValues((prev) => ({ ...prev, [key]: value }));
 
     if (formErrors[key] && value?.trim() !== "") {
       setFormErrors((prevErrors) => {
@@ -67,7 +74,21 @@ const FormSubmitComponent = (props: {
 
     try {
       setIsLoading(true);
-      const responseJson = JSON.stringify(formVals.current);
+      const visibleValues: Record<string, string> = {};
+      const collectValues = (blockList: FormBlockInstance[]) => {
+        blockList.forEach((block) => {
+          if (!block) return;
+          const inputBlockTypes = ["TextField", "TextArea", "RadioSelect", "StarRating", "Checkbox", "Select", "DatePicker"];
+          if (inputBlockTypes.includes(block.blockType)) {
+            visibleValues[block.id] = formValues[block.id] || "";
+          }
+          if (block.childblocks && block.childblocks.length > 0) {
+            collectValues(block.childblocks);
+          }
+        });
+      };
+      collectValues(blocks);
+      const responseJson = JSON.stringify(visibleValues);
       const response = await submitResponse(formId, responseJson);
       if (response.success) {
         setSubmitted(true);

@@ -44,6 +44,9 @@ type BulderContextType = {
     primaryColor?: string;
     backgroundColor?: string;
     bannerImage?: string | null;
+    webhookUrl?: string;
+    maxResponses?: number | null;
+    expiryDate?: string | null;
   }) => void;
 };
 
@@ -207,26 +210,28 @@ export default function BuilderContextProvider({
   };
 
   const updateChildBlock = (
-    parentId: string,
+    parentId: string | undefined | null,
     childblockId: string,
     updatedBlock: FormBlockInstance
   ) => {
     setBlockLayouts((prevBlocks) => {
-      const updatedBlocks = prevBlocks.map((parentBlock) => {
-        if (parentBlock.id === parentId) {
-          const updatedChildblocks = parentBlock.childblocks?.map(
-            (childblock) =>
-              childblock.id === childblockId
-                ? { ...childblock, ...updatedBlock }
-                : childblock
-          );
-          return { ...parentBlock, childblocks: updatedChildblocks };
-        }
-
-        return parentBlock;
-      });
-
-      return updatedBlocks;
+      const updateRecursive = (
+        blocks: FormBlockInstance[]
+      ): FormBlockInstance[] => {
+        return blocks.map((block) => {
+          if (block.id === childblockId) {
+            return { ...block, ...updatedBlock };
+          }
+          if (block.childblocks) {
+            return {
+              ...block,
+              childblocks: updateRecursive(block.childblocks),
+            };
+          }
+          return block;
+        });
+      };
+      return updateRecursive(prevBlocks);
     });
   };
 

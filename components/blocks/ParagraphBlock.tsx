@@ -119,8 +119,7 @@ function ParagraphPropertiesComponent({
   });
 
   const setChanges = (values: ParagraphPropertiesSchema) => {
-    if (!parentId) return null;
-    updateChildBlock(parentId, block.id, {
+    updateChildBlock(parentId || "", block.id, {
       ...block,
       attributes: {
         ...block.attributes,

@@ -40,19 +40,31 @@ const Responds = async ({ params }: { params: { formId: string } }) => {
             >
               ({responses?.length}) Responses
             </h1>
-            <a
-              href={`${process.env.NEXT_PUBLIC_APP_URL}/public/submit-form/${formId}`}
-              target="_blank"
-            >
+            {form.published ? (
+              <a
+                href={`${process.env.NEXT_PUBLIC_APP_URL}/public/submit-form/${formId}`}
+                target="_blank"
+              >
+                <Button
+                  className="
+                w-full max-w-44
+                 !bg-primary"
+                >
+                  <Link />
+                  Visit Link
+                </Button>
+              </a>
+            ) : (
               <Button
+                disabled
                 className="
-              w-full max-w-44
-               !bg-primary"
+                w-full max-w-44
+                 bg-gray-300 dark:bg-gray-800 text-gray-400 dark:text-gray-600"
               >
                 <Link />
                 Visit Link
               </Button>
-            </a>
+            )}
           </div>
 
           <div className="mt-10">
@@ -60,7 +72,7 @@ const Responds = async ({ params }: { params: { formId: string } }) => {
               className="!border-[#eee]
              !bg-[#eee]"
             />
-            <AllReponds blocks={blocks} responses={responses} />
+            <AllReponds blocks={blocks} responses={responses} formId={formId} />
           </div>
         </div>
       </div>

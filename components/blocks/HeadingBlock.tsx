@@ -140,8 +140,7 @@ function HeadingPropertiesComponent({
   }, [block.attributes, form]);
 
   function setChanges(values: propertiesValidateSchemaType) {
-    if (!parentId) return null;
-    updateChildBlock(parentId, block.id, {
+    updateChildBlock(parentId || "", block.id, {
       ...block,
       attributes: {
         ...block.attributes,

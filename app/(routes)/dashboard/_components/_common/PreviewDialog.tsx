@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 import {
@@ -17,6 +17,12 @@ import { FormBlocks } from "@/lib/form-blocks";
 
 const PreviewDialog = () => {
   const { blockLayouts, formData } = useBuilder();
+  const [formValues, setFormValues] = useState<Record<string, string>>({});
+
+  const handleBlur = (key: string, value: string) => {
+    setFormValues((prev) => ({ ...prev, [key]: value }));
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -96,6 +102,7 @@ const PreviewDialog = () => {
                       <FormBlockComponent
                         key={block.id}
                         blockInstance={block}
+                        handleBlur={handleBlur}
                       />
                     );
                   })}

@@ -40,15 +40,19 @@ export async function GET(req: Request) {
 
     // Manually fetch bannerImage using raw query because Prisma client might not be aware of it yet
     const rawSettings: any[] = await prisma.$queryRawUnsafe(
-      `SELECT "bannerImage" FROM "FormSettings" WHERE "id" = $1`,
+      `SELECT "bannerImage", "webhookUrl" FROM "FormSettings" WHERE "id" = $1`,
       form.settingsId
     );
 
     if (rawSettings && rawSettings.length > 0) {
       // Check both casings as Postgres might return lowercase depending on driver/quoting
       const banner = rawSettings[0].bannerImage || rawSettings[0].bannerimage;
+      const webhook = rawSettings[0].webhookUrl || rawSettings[0].webhookurl;
       if (banner !== undefined) {
         (form.settings as any).bannerImage = banner;
+      }
+      if (webhook !== undefined) {
+        (form.settings as any).webhookUrl = webhook;
       }
     }
 

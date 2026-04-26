@@ -105,9 +105,9 @@ const Header = () => {
                 <ChevronDown className="hidden sm:block ml-auto size-4 text-gray-500 group-hover:text-primary transition-colors" />
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 mt-2" align="end">
+            <DropdownMenuContent className="w-56" align="end" sideOffset={12}>
               <DropdownMenuItem asChild>
-                <LogoutLink className="flex items-center gap-2 text-rose-600 focus:text-rose-600 focus:bg-rose-50 cursor-pointer w-full">
+                <LogoutLink postLogoutRedirectURL="/" className="flex items-center gap-2 text-rose-600 focus:text-rose-600 focus:bg-rose-50 cursor-pointer w-full">
                   <LogInIcon className="w-4 h-4" />
                   Logout
                 </LogoutLink>
