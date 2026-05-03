@@ -46,7 +46,7 @@ type BulderContextType = {
     bannerImage?: string | null;
     webhookUrl?: string;
     maxResponses?: number | null;
-    expiryDate?: string | null;
+    expiryDate?: Date | null;
   }) => void;
 };
 

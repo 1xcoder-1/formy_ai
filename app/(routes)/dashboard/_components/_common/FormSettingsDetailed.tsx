@@ -123,7 +123,7 @@ const FormSettingsDetailed = () => {
       if (res.success) {
         updateSettings({ 
           maxResponses: maxResponses ? parseInt(maxResponses) : null, 
-          expiryDate: expiryDate || null 
+          expiryDate: expiryDate ? new Date(expiryDate) : null 
         });
         toast({ title: "Updated", description: "Form limits saved." });
       } else {

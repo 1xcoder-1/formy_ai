@@ -108,7 +108,7 @@ const PublishFormBtn = () => {
           settings: {
             ...formData.settings,
             maxResponses: maxResponses ? parseInt(maxResponses) : null,
-            expiryDate: expiryDate || null,
+            expiryDate: expiryDate ? new Date(expiryDate) : null,
           }
         });
         setIsOpen(false);
