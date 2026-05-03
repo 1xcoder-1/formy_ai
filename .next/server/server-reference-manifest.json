@@ -63,8 +63,24 @@
       "layer": {
         "app/(routes)/dashboard/form/builder/[formId]/page": "action-browser"
       }
+    },
+    "d0e6d3550d95d96a140232585e29b3cfc10b5297": {
+      "workers": {
+        "app/(routes)/public/submit-form/[formId]/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22H%3A%5C%5Cformy_ai%5C%5Cactions%5C%5Cform.action.ts%22%2C%5B%22fetchPublishFormById%22%2C%22submitResponse%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/(routes)/public/submit-form/[formId]/page": "rsc"
+      }
+    },
+    "ea2f077102d2beeb7c8ae732cd6c1cd0f7ad2d73": {
+      "workers": {
+        "app/(routes)/public/submit-form/[formId]/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22H%3A%5C%5Cformy_ai%5C%5Cactions%5C%5Cform.action.ts%22%2C%5B%22fetchPublishFormById%22%2C%22submitResponse%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/(routes)/public/submit-form/[formId]/page": "rsc"
+      }
     }
   },
   "edge": {},
-  "encryptionKey": "U+gAxWRLsgF+p1vQ5ng8R4eTEI79ck1ghXH8r/bYXq0="
+  "encryptionKey": "wZkFS+BXgaQ+Yox1L2mgeIcO8zqoyfX/mVf2NvZeLp8="
 }

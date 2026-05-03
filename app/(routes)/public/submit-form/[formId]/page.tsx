@@ -1,5 +1,6 @@
 import { fetchPublishFormById } from "@/actions/form.action";
 import React from "react";
+import Logo from "@/components/logo";
 import NotAvaliable from "../../_components/NotAvaliable";
 import { FormBlockInstance } from "@/@types/form-block.type";
 import FormSubmitComponent from "../../_components/FormSubmitComponent";
@@ -20,7 +21,10 @@ const Page = async ({ params }: { params: { formId: string } }) => {
           <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-6">
             {result.message || "This form is not accepting responses at the moment."}
           </p>
-          <div className="text-xs text-gray-400 font-medium">Powered by Formy.ai</div>
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Powered by</span>
+            <Logo url="/" />
+          </div>
         </div>
       </div>
     );

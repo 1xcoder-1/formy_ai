@@ -3,10 +3,13 @@ import { fetchAllForms, fetchFormStats } from "@/actions/form.action";
 import StatsCards from "./_components/StatsCards";
 import { Separator } from "@/components/ui/separator";
 import CreateForm from "./_components/CreateForm";
-import { Loader } from "lucide-react";
+import FormSkeleton from "./_components/_common/FormSkeleton";
 import FormItem from "./_components/_common/FormItem";
 
-const Dashboard = () => {
+const Dashboard = async () => {
+  const stats = await fetchFormStats();
+  const totalForms = stats.success ? (stats.totalForms ?? 0) : 0;
+
   return (
     <div className="w-full pt-8">
       <div className="w-full max-w-6xl mx-auto px-2 md:px-0 pt-1">
@@ -16,7 +19,7 @@ const Dashboard = () => {
             <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
             <CreateForm />
           </div>
-          <StatsListWrap />
+          <StatsCards loading={false} data={stats} />
         </section>
         <div className="mt-10">
           <Separator className="!border-[#eee] !bg-[#eee]" />
@@ -30,33 +33,39 @@ const Dashboard = () => {
 
           <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             <Suspense
-              fallback={[1, 2, 3, 4].map((item) => (
-                <Loader size="3rem" className="animate-spin" />
-              ))}
+              fallback={
+                totalForms > 0 
+                  ? Array.from({ length: totalForms }).map((_, idx) => (
+                      <FormSkeleton key={idx} />
+                    ))
+                  : [1, 2, 3].map((item) => (
+                      <FormSkeleton key={item} />
+                    ))
+              }
             >
               <FormList />
             </Suspense>
           </div>
-
-          {/* <div className="flex items-center justify-center">
-            No form created
-          </div> */}
         </section>
       </div>
     </div>
   );
 };
 
-async function StatsListWrap() {
-  const stats = await fetchFormStats();
-  return <StatsCards loading={false} data={stats} />;
-}
-
 async function FormList() {
   const { form } = await fetchAllForms();
+
+  if (!form || form.length === 0) {
+    return (
+      <div className="col-span-full flex flex-col items-center justify-center py-20 bg-gray-50/50 rounded-3xl border border-dashed border-gray-200">
+        <p className="text-gray-500 font-medium">No forms created yet</p>
+      </div>
+    );
+  }
+
   return (
     <>
-      {form?.map((form) => (
+      {form.map((form) => (
         <FormItem
           key={form.id}
           id={form.id}

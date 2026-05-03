@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Frown } from "lucide-react";
 import React from "react";
+import Logo from "@/components/logo";
 
 const NotAvaliable = () => {
   return (
@@ -22,13 +23,11 @@ const NotAvaliable = () => {
       </div>
 
       {/* Bottom Footer firmly anchored */}
-      <div className="absolute bottom-10 left-0 right-0 text-center">
-        <p className="text-xs text-gray-400 uppercase tracking-widest font-medium">
-          Company by
+      <div className="absolute bottom-10 left-0 right-0 flex flex-col items-center justify-center">
+        <p className="text-xs text-gray-400 uppercase tracking-widest font-medium mb-3">
+          Powered by
         </p>
-        <h5 className="font-black text-[20px] text-primary tracking-wide">
-          Formy.ai
-        </h5>
+        <Logo url="/" />
       </div>
       
     </div>

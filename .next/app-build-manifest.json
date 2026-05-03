@@ -36,6 +36,22 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(routes)/dashboard/form/layout.js"
+    ],
+    "/(routes)/public/submit-form/[formId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(routes)/public/submit-form/[formId]/page.css",
+      "static/chunks/app/(routes)/public/submit-form/[formId]/page.js"
+    ],
+    "/(routes)/public/submit-form/[formId]/loading": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/public/submit-form/[formId]/loading.js"
+    ],
+    "/(routes)/public/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/public/layout.js"
     ]
   }
 }
