@@ -15,6 +15,27 @@
       "static/chunks/main-app.js",
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
+    ],
+    "/(routes)/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/dashboard/page.js"
+    ],
+    "/(routes)/dashboard/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/dashboard/layout.js"
+    ],
+    "/(routes)/dashboard/form/builder/[formId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(routes)/dashboard/form/builder/[formId]/page.css",
+      "static/chunks/app/(routes)/dashboard/form/builder/[formId]/page.js"
+    ],
+    "/(routes)/dashboard/form/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(routes)/dashboard/form/layout.js"
     ]
   }
 }
